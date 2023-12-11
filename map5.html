@@ -19,7 +19,7 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/c3/0.7.20/c3.min.js"></script>
 
 
-        <script type="text/javascript" src="london.js"></script>
+        <script type="text/javascript" src="data.js"></script>
 
         <style type="text/css">
             /* Style of the Legend: adjust the values below to change the appearance of the legend pane*/
@@ -44,28 +44,29 @@
     </head>
 
     <body>
+	<h1> US age groups by State and Population Density </h1>
         <div id="map" style="height: 500px"></div>
         <div id="chart"></div>
         
         <script type="text/javascript">
 
             var map = L.map('map', {
-              center: [51.48,-0.07],
-              zoom: 10
+              center: [39.2907867,-96.2315068],
+              zoom: 4
             });
 
              L.tileLayer('https://cartodb-basemaps-{s}.global.ssl.fastly.net/light_all/{z}/{x}/{y}.png', {
                attribution: 'Map tiles by Carto, under CC BY 3.0. Data by OpenStreetMap, under ODbL.',
                maxZoom: 11,
-               minZoom: 5
+               minZoom: 3
              }).addTo(map);
 
             function getColor(value) {
-                return value > 139 ? '#54278f':
-                       value > 87  ? '#756bb1':
-                       value > 53  ? '#9e9ac8':
-                       value > 32  ? '#cbc9e2':
-                                     '#f2f0f7';
+                return value > 1008 ? '#414387':
+                       value > 465  ? '#2a788e':
+                       value > 228  ? '#23a884':
+                       value > 107  ? '#7ad151':
+                                      '#fde725';
             }
 
             function style(feature){
@@ -74,7 +75,7 @@
                     weight: 2,
                     opacity: 1,
                     color: 'gray',
-                    fillOpacity: 0.9
+                    fillOpacity: 0.5
                 };
             }
             
@@ -91,7 +92,7 @@
         },
 
         title:{
-            text: props.NAME  // Use the NAME attribute as chart title 
+            text: props.NAME10  // Use the NAME10 attribute as chart title 
                               // This is displayed above the chart
                               // You may use other strings, HTML elements or combined
         },
@@ -101,11 +102,11 @@
             // I use the attribute values as data for making the charts
             // The strings are labels of the charts (shown in legend)
             columns: [  
-                ['White', props.White],
-                ['Black', props.Black],
-                ['Asian', props.Asian],
-                ['Mixed', props.Mixed],
-                ['Other', props.Other]
+                ['Under 19', props.Under19],
+                ['Age 20-34', props.age20to34],
+                ['Age 35-49', props.age35to49],
+                ['Age 50-69', props.age50to69],
+                ['Age 70+', props.age70Over],
             ],
 
             type: 'donut',  // chart type
@@ -170,7 +171,7 @@
             legend.onAdd = function (map) {
 
                 var div = L.DomUtil.create('div', 'legend'),
-                    grades = [0, 32, 53, 87, 139]; // The break values to define the intervals of population, note we begin from 0 here
+                    grades = [0, 107, 228, 465, 1008]; // The break values to define the intervals of population, note we begin from 0 here
 
                 div.innerHTML = '<b>Population Density <br> 2011 <br></b>'; // The legend title (HTML-based), in this case it's Population Density 2011
 
